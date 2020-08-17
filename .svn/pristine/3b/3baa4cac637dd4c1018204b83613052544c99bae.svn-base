@@ -1,0 +1,36 @@
+package com.briup.estore.web.servlet;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.briup.estore.service.ICustomerService;
+import com.briup.estore.service.impl.CustomerServiceImpl;
+
+public class LoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		ICustomerService customerService = new CustomerServiceImpl();
+		String url = "/toLoginServlet";
+		try {
+			String userPassword = customerService.login(name);
+			if (password.equals(userPassword)) {
+				url = "/toindexServlet";
+			}
+		} catch (Exception e) {
+//			request.setAttribute("msg", "用户名或密码错误!");
+			e.printStackTrace();
+			request.getRequestDispatcher(url).forward(request, response);
+		}
+		request.getRequestDispatcher(url).forward(request, response);
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

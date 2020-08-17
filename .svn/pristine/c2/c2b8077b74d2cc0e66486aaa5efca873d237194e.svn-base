@@ -1,0 +1,28 @@
+package com.briup.test;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+
+import com.briup.estore.bean.Book;
+import com.briup.estore.dao.BookMapper;
+import com.briup.estore.utils.MyBatisSqlSessionFactory;
+
+public class selectBookByClick {
+	@Test
+	public void test1() {
+		SqlSession session = MyBatisSqlSessionFactory.openSession();
+		BookMapper mapper = session.getMapper(BookMapper.class);
+		List<Book> selectBookByClick = mapper.selectBookByClick();
+		System.out.println(selectBookByClick);
+	}
+	
+	@Test
+	public void test2() {
+		SqlSession session = MyBatisSqlSessionFactory.openSession();
+		BookMapper mapper = session.getMapper(BookMapper.class);
+		List<Book> books = mapper.selectBooks();
+		System.out.println(books);
+	}
+}
